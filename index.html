@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#9A4600">
+<title>C Programming Quiz | Modules I-III</title>
+<meta name="description" content="Practice quiz for Problem Solving and Programming in C: fundamentals, C basics and control flow.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@400..700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--p:#9A4600;--onp:#fff;--pc:#FFDBC8;--opc:#321300;--sc:#F8DDCF;--osc:#2B1709;--tc:#EBE3A6;--otc:#201C00;--ok:#146C2E;--okc:#C8F1D0;--er:#BA1A1A;--ec:#FFDAD6;--oec:#410002;--bg:#FFF8F5;--s1:#FFF1EA;--s2:#FBEBE2;--s3:#F5E3D8;--on:#221A15;--onv:#52443C;--ol:#85736B;--olv:#D7C2B8;--r:20px;--f:'Google Sans','Google Sans Flex','Google Sans Text','Product Sans','Poppins',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--p:#FFB689;--onp:#532200;--pc:#763300;--opc:#FFDBC8;--sc:#5A4234;--osc:#FFDCC9;--tc:#4A4517;--otc:#EBE3A6;--ok:#7DDB91;--okc:#0F3D1C;--er:#FFB4AB;--ec:#93000A;--oec:#FFDAD6;--bg:#1A120D;--s1:#231A14;--s2:#2A1F18;--s3:#352A22;--on:#F0DFD6;--onv:#D7C2B8;--ol:#A08D84;--olv:#52443C}}
+:root[data-theme=dark]{--p:#FFB689;--onp:#532200;--pc:#763300;--opc:#FFDBC8;--sc:#5A4234;--osc:#FFDCC9;--tc:#4A4517;--otc:#EBE3A6;--ok:#7DDB91;--okc:#0F3D1C;--er:#FFB4AB;--ec:#93000A;--oec:#FFDAD6;--bg:#1A120D;--s1:#231A14;--s2:#2A1F18;--s3:#352A22;--on:#F0DFD6;--onv:#D7C2B8;--ol:#A08D84;--olv:#52443C}
+*{box-sizing:border-box;margin:0;-webkit-tap-highlight-color:transparent}
+html,body{min-height:100%}
+body{font-family:var(--f);background:var(--bg);color:var(--on);line-height:1.5;display:flex;justify-content:center;padding:max(20px,env(safe-area-inset-top)) max(14px,env(safe-area-inset-right)) max(40px,env(safe-area-inset-bottom)) max(14px,env(safe-area-inset-left))}
+main{width:100%;max-width:720px}
+header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.brand{display:flex;gap:10px;align-items:center;font-weight:600;font-size:15px}
+.logo{width:36px;height:36px;border-radius:12px;background:var(--p);color:var(--onp);display:grid;place-items:center;font-weight:700;font-size:15px}
+.icon{border:0;background:var(--s3);color:var(--onv);width:40px;height:40px;border-radius:50%;cursor:pointer;font-size:18px}
+.icon:hover{background:var(--sc)}
+.card{background:var(--s1);border-radius:28px;padding:24px;border:1px solid var(--olv)}
+h1{font-size:30px;line-height:1.15;font-weight:600;margin-bottom:8px}
+h2{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--onv);margin:22px 0 10px;font-weight:600}
+p.sub{color:var(--onv);font-size:15px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font:inherit;font-size:14px;border:1px solid var(--ol);background:transparent;color:var(--onv);padding:8px 16px;border-radius:10px;cursor:pointer;transition:.15s}
+.chip[aria-pressed=true]{background:var(--sc);color:var(--osc);border-color:transparent;font-weight:500}
+.chip[aria-pressed=true]:before{content:"\2713\00a0"}
+.btn{font:inherit;font-weight:500;font-size:15px;border:0;border-radius:100px;padding:14px 28px;cursor:pointer;background:var(--p);color:var(--onp);transition:.15s}
+.btn:hover{filter:brightness(1.08);box-shadow:0 2px 8px #0003}
+.btn.tonal{background:var(--sc);color:var(--osc)}
+.btn:disabled{opacity:.4;cursor:not-allowed;box-shadow:none}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}
+.stats{display:flex;gap:10px;margin-top:20px}
+.stat{flex:1;background:var(--s3);border-radius:16px;padding:12px 14px}.stat b{display:block;font-size:22px}.stat span{font-size:12px;color:var(--onv)}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;font-size:14px;color:var(--onv)}
+.bar{height:8px;border-radius:8px;background:var(--s3);overflow:hidden;margin-bottom:20px}.bar i{display:block;height:100%;background:var(--p);border-radius:8px;transition:width .3s}
+.tag{display:inline-block;background:var(--tc);color:var(--otc);font-size:12px;font-weight:500;padding:4px 12px;border-radius:8px;margin-bottom:12px}
+.q{font-size:20px;line-height:1.4;font-weight:500;margin-bottom:18px}
+code{font-family:'Roboto Mono',ui-monospace,Consolas,monospace;font-size:.88em;background:var(--s3);color:var(--p);padding:2px 7px;border-radius:6px}
+.opt{display:flex;gap:14px;align-items:center;width:100%;text-align:left;font:inherit;font-size:15.5px;color:var(--on);background:var(--s2);border:1.5px solid var(--olv);border-radius:16px;padding:13px 16px;margin-bottom:10px;cursor:pointer;transition:.15s}
+.opt:hover:not(:disabled){border-color:var(--p);background:var(--s3)}
+.opt .k{flex:none;width:30px;height:30px;border-radius:50%;background:var(--sc);color:var(--osc);display:grid;place-items:center;font-size:13px;font-weight:600}
+.opt:disabled{cursor:default}
+.opt.right{background:var(--okc);border-color:var(--ok);color:var(--ok)}.opt.right .k{background:var(--ok);color:var(--okc)}
+.opt.wrong{background:var(--ec);border-color:var(--er);color:var(--oec)}.opt.wrong .k{background:var(--er);color:var(--ec)}
+.fb{border-radius:16px;padding:14px 16px;margin:6px 0 4px;font-size:14.5px;animation:up .25s}
+.fb.good{background:var(--okc);color:var(--ok)}.fb.bad{background:var(--ec);color:var(--oec)}.fb b{display:block;margin-bottom:2px}
+.ring{width:150px;height:150px;margin:6px auto 12px;position:relative}
+.ring svg{transform:rotate(-90deg)}.ring .t{position:absolute;inset:0;display:grid;place-items:center;text-align:center;font-size:34px;font-weight:600;line-height:1}
+.ring small{display:block;font-size:13px;color:var(--onv);font-weight:400;margin-top:4px}
+.center{text-align:center}
+.rev{border-left:4px solid var(--er);background:var(--s2);border-radius:4px 16px 16px 4px;padding:12px 14px;margin-bottom:10px;font-size:14.5px}
+.rev small{display:block;color:var(--onv);margin-top:4px}
+.hide{display:none}
+.hdr-r{display:flex;gap:8px}
+input{font:inherit;font-size:16px;width:100%;padding:13px 16px;border-radius:14px;border:1.5px solid var(--ol);background:var(--s2);color:var(--on);margin-bottom:10px;outline:0}
+input:focus{border-color:var(--p);box-shadow:0 0 0 3px color-mix(in srgb,var(--p) 25%,transparent)}
+.who{display:grid;grid-template-columns:1fr;gap:0;margin-top:18px}
+label{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--onv);display:block;margin:0 0 8px}
+.lb{display:grid;grid-template-columns:30px 1fr auto auto;gap:10px;align-items:center;padding:10px 12px;border-radius:14px;background:var(--s2);margin-bottom:8px;font-size:14.5px}
+.lb.me{background:var(--sc);color:var(--osc)}.lb small{display:block;color:var(--onv);font-size:12px}
+.lb .rk{width:28px;height:28px;border-radius:50%;background:var(--pc);color:var(--opc);display:grid;place-items:center;font-size:12px;font-weight:600}
+.mb{margin-bottom:14px;font-size:14px}.mb .bar{height:10px;margin:6px 0 0}
+.ph{display:none}
+:focus-visible{outline:3px solid var(--p);outline-offset:2px}
+@media(hover:none){.opt:hover:not(:disabled){border-color:var(--olv);background:var(--s2)}}
+@media(min-width:760px){body{padding-top:36px}.card{padding:36px}h1{font-size:36px}.q{font-size:22px}.opt{font-size:16.5px;padding:15px 20px}.who{grid-template-columns:1fr 1fr;gap:12px}}
+@media(max-width:360px){.btn{padding:12px 20px}.stats{flex-wrap:wrap}.lb{grid-template-columns:28px 1fr auto}.lb .tm{display:none}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media print{body{background:#fff;color:#000;display:block;padding:0}header,.row,footer,#home,#play,#board,#review{display:none!important}.card{border:0;background:#fff}.ph{display:block;text-align:left;margin-bottom:10px;font-size:14px;border-bottom:1px solid #999;padding-bottom:8px}}
+#home{background:radial-gradient(90% 60% at 100% 0%,var(--pc) 0,transparent 70%),var(--s1)}
+#end{background:radial-gradient(80% 50% at 50% 0%,var(--pc) 0,transparent 70%),var(--s1)}
+.logo{border-radius:14px 14px 14px 4px;box-shadow:0 2px 6px color-mix(in srgb,var(--p) 40%,transparent)}
+.card{box-shadow:0 1px 3px color-mix(in srgb,var(--p) 14%,transparent),0 8px 24px color-mix(in srgb,var(--p) 8%,transparent)}
+.btn,.chip,.icon,.opt{position:relative;overflow:hidden}
+#start{padding:16px 34px;font-size:16px;box-shadow:0 4px 14px color-mix(in srgb,var(--p) 40%,transparent)}
+.rip{position:absolute;border-radius:50%;background:currentColor;opacity:.2;transform:scale(0);animation:rp .6s ease-out forwards;pointer-events:none}
+@keyframes rp{to{transform:scale(1);opacity:0}}
+.bar i{background:linear-gradient(90deg,var(--p),color-mix(in srgb,var(--p) 55%,#FFB300))}
+::selection{background:var(--pc);color:var(--opc)}
+@keyframes up{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+footer{text-align:center;color:var(--ol);font-size:12px;margin-top:18px}
+@media(max-width:480px){h1{font-size:26px}.card{padding:18px;border-radius:24px}.q{font-size:18px}}
+</style>
+</head>
+<body>
+<main>
+<header><div class="brand"><div class="logo">C</div>C Quiz</div><div class="hdr-r"><button class="icon" id="boardBtn" aria-label="Scores and progress" title="Scores">&#127942;</button><button class="icon" id="theme" aria-label="Toggle theme" title="Theme">&#9680;</button></div></header>
+
+<section class="card" id="home">
+  <h1 id="hi">Test yourself on C</h1>
+  <p class="sub">Problem Solving and Programming in C: Modules I, II and III. Instant feedback with a short explanation after every answer.</p>
+  <div class="who"><div><label for="nm">Your name *</label><input id="nm" maxlength="30" placeholder="e.g. Aarav Sharma" autocomplete="name"></div><div><label for="roll">Roll no. / class</label><input id="roll" maxlength="20" placeholder="Optional" autocomplete="off"></div></div>
+  <h2>Modules</h2><div class="chips" id="mods"></div>
+  <h2>Questions</h2><div class="chips" id="counts"></div>
+  <h2>Options</h2><div class="chips"><button class="chip" id="shuf" aria-pressed="true">Shuffle questions</button></div>
+  <div class="stats"><div class="stat"><b id="best">-</b><span>Best score</span></div><div class="stat"><b id="att">0</b><span>Attempts</span></div><div class="stat"><b id="avail">0</b><span>Questions in bank</span></div></div>
+  <div class="row"><button class="btn" id="start" disabled>Start quiz</button><span class="sub" id="need" style="align-self:center;font-size:13px">Enter your name to begin</span></div>
+</section>
+
+<section class="card hide" id="play">
+  <div class="top"><span id="pos"></span><span id="tm" aria-label="Elapsed time">0:00</span><span id="sc"></span></div>
+  <div class="bar"><i id="prog"></i></div>
+  <span class="tag" id="tag"></span>
+  <div class="q" id="q"></div>
+  <div id="opts"></div>
+  <div id="fb"></div>
+  <div class="row"><button class="btn" id="next" disabled>Next</button><button class="btn tonal" id="quit">Quit</button></div>
+</section>
+
+<section class="card hide center" id="end">
+  <div class="ph" id="ph"></div><div class="ring"><svg width="150" height="150" viewBox="0 0 150 150"><circle cx="75" cy="75" r="64" fill="none" stroke="var(--s3)" stroke-width="14"/><circle id="arc" cx="75" cy="75" r="64" fill="none" stroke="var(--p)" stroke-width="14" stroke-linecap="round" stroke-dasharray="402" stroke-dashoffset="402" style="transition:stroke-dashoffset 1s"/></svg><div class="t"><div><span id="pct"></span><small id="frac"></small></div></div></div>
+  <h1 id="msg" style="font-size:24px"></h1><p class="sub" id="msg2"></p><p class="sub" id="meta" style="margin-top:6px;font-size:13px"></p>
+  <div class="row" style="justify-content:center"><button class="btn" id="again">Try again</button><button class="btn tonal" id="retry">Retry mistakes</button><button class="btn tonal" id="share">Share result</button><button class="btn tonal" id="print">Print / Save PDF</button><button class="btn tonal" id="home2">Home</button></div>
+  <div id="review" style="text-align:left;margin-top:26px"></div>
+</section>
+<section class="card hide" id="board"><h1 style="font-size:26px">Scores and progress</h1><p class="sub">Saved on this device only.</p>
+  <div class="stats" id="bstats"></div><h2>Top attempts</h2><div id="btab"></div><h2>Topic accuracy</h2><div id="bmod"></div>
+  <div class="row"><button class="btn" id="bback">Back</button><button class="btn tonal" id="bclear">Clear my data</button></div></section>
+<footer>Keys: 1-4 or A-D to answer, Enter for next. Scores are stored in your browser only.</footer>
+</main>
+<script>
+const DATA=[
+ {
+  "m": "Module I",
+  "q": "Which unit of the computer performs arithmetic calculations and logical decisions?",
+  "o": [
+   "Output unit",
+   "ALU",
+   "Control Unit",
+   "Secondary storage"
+  ],
+  "a": 1,
+  "e": "The ALU (Arithmetic and Logic Unit) does the maths and the comparisons. The CPU supervises everything."
+ },
+ {
+  "m": "Module I",
+  "q": "Which translator converts the ENTIRE source program into machine code before it runs?",
+  "o": [
+   "Assembler",
+   "Compiler",
+   "Loader",
+   "Interpreter"
+  ],
+  "a": 1,
+  "e": "A compiler scans the whole program first and translates it. An interpreter works line by line. C is a compiled language."
+ },
+ {
+  "m": "Module I",
+  "q": "Which digits are used in the octal number system?",
+  "o": [
+   "0 to 7",
+   "0 and 1",
+   "0 to 9 and A to F",
+   "0 to 9"
+  ],
+  "a": 0,
+  "e": "Octal = base 8 = digits 0 to 7. Binary is 0-1, decimal 0-9, hexadecimal 0-9 plus A-F."
+ },
+ {
+  "m": "Module I",
+  "q": "What is the correct order of the first three steps of problem solving?",
+  "o": [
+   "Define, Program, Algorithm",
+   "Analyze, Define, Program",
+   "Algorithm, Define, Analyze",
+   "Define, Analyze, Algorithm"
+  ],
+  "a": 3,
+  "e": "Define the problem, Analyze it, then develop an Algorithm. Next come Program, Test/Debug, Document, Maintain."
+ },
+ {
+  "m": "Module I",
+  "q": "Which flowchart symbol is used for a decision (yes/no question)?",
+  "o": [
+   "Parallelogram",
+   "Rectangle",
+   "Oval",
+   "Diamond"
+  ],
+  "a": 3,
+  "e": "Diamond = decision. Oval = start/stop, rectangle = process, parallelogram = input/output."
+ },
+ {
+  "m": "Module I",
+  "q": "An assembler translates:",
+  "o": [
+   "Machine code to assembly",
+   "Python to C",
+   "High-level code to machine code",
+   "Assembly language to machine code"
+  ],
+  "a": 3,
+  "e": "An assembler maps assembly language to machine code, roughly one-to-one."
+ },
+ {
+  "m": "Module I",
+  "q": "How many values can a variable hold at one time?",
+  "o": [
+   "Two",
+   "Depends on the OS",
+   "One",
+   "Unlimited"
+  ],
+  "a": 2,
+  "e": "A variable holds exactly one value. Storing a new value overwrites the old one."
+ },
+ {
+  "m": "Module II",
+  "q": "What is the output of `printf(\"%d\", 7/2);`?",
+  "o": [
+   "2",
+   "3.5",
+   "4",
+   "3"
+  ],
+  "a": 3,
+  "e": "Both operands are int, so this is integer division: 7/2 = 3 (the decimal part is dropped)."
+ },
+ {
+  "m": "Module II",
+  "q": "Which of these is an INVALID identifier in C?",
+  "o": [
+   "roll_no",
+   "2names",
+   "_total",
+   "rollNo"
+  ],
+  "a": 1,
+  "e": "An identifier cannot start with a digit. Letters, digits and underscores are allowed."
+ },
+ {
+  "m": "Module II",
+  "q": "After `int a = 5; int b = a++;` what are a and b?",
+  "o": [
+   "a=6, b=6",
+   "a=5, b=6",
+   "a=6, b=5",
+   "a=5, b=5"
+  ],
+  "a": 2,
+  "e": "Post-increment uses the OLD value first (b gets 5), then increments a to 6."
+ },
+ {
+  "m": "Module II",
+  "q": "Value of `10 + 5 * 3 - 4 / 2` is:",
+  "o": [
+   "26",
+   "23",
+   "18",
+   "21"
+  ],
+  "a": 1,
+  "e": "Multiply/divide first: 5*3=15 and 4/2=2. Then 10 + 15 - 2 = 23."
+ },
+ {
+  "m": "Module II",
+  "q": "Value of `20 % 3 * 2` is:",
+  "o": [
+   "6",
+   "2",
+   "4",
+   "0"
+  ],
+  "a": 2,
+  "e": "% and * have the same precedence and associate left to right: (20 % 3) * 2 = 2 * 2 = 4."
+ },
+ {
+  "m": "Module II",
+  "q": "Which header file is required to use `bool`, `true` and `false`?",
+  "o": [
+   "<math.h>",
+   "<stdbool.h>",
+   "<stdio.h>",
+   "<bool.h>"
+  ],
+  "a": 1,
+  "e": "bool was introduced in C99 and needs #include <stdbool.h>."
+ },
+ {
+  "m": "Module II",
+  "q": "What happens if you try to change a `const int` variable?",
+  "o": [
+   "Compile-time error",
+   "It becomes 0",
+   "It changes silently",
+   "Runtime crash"
+  ],
+  "a": 0,
+  "e": "A const variable is read-only, so assigning to it gives a compiler error."
+ },
+ {
+  "m": "Module II",
+  "q": "Which symbol starts and ends a multi-line comment in C?",
+  "o": [
+   "/* ... */",
+   "<!-- ... -->",
+   "# ... #",
+   "// ... //"
+  ],
+  "a": 0,
+  "e": "/* ... */ is a multi-line comment. // is single-line."
+ },
+ {
+  "m": "Module II",
+  "q": "What does `printf(\"%d\", 10 > 9);` print?",
+  "o": [
+   "true",
+   "10",
+   "1",
+   "0"
+  ],
+  "a": 2,
+  "e": "A true comparison gives 1 and a false one gives 0, and %d prints that number."
+ },
+ {
+  "m": "Module II",
+  "q": "`x += 10;` is the same as:",
+  "o": [
+   "x = 10;",
+   "x == x + 10;",
+   "x = x + 10;",
+   "x = x * 10;"
+  ],
+  "a": 2,
+  "e": "+= adds the right side to the variable and stores the result back."
+ },
+ {
+  "m": "Module II",
+  "q": "What is `5 & 3` (bitwise AND)?",
+  "o": [
+   "2",
+   "8",
+   "7",
+   "1"
+  ],
+  "a": 3,
+  "e": "5 = 101 and 3 = 011. AND keeps only bits that are 1 in both: 001 = 1."
+ },
+ {
+  "m": "Module II",
+  "q": "Which header gives you `sqrt()` and `pow()`?",
+  "o": [
+   "<math.h>",
+   "<stdio.h>",
+   "<stdlib.h>",
+   "<string.h>"
+  ],
+  "a": 0,
+  "e": "Math functions live in <math.h>. string.h has strlen/strcpy, stdlib.h has malloc/exit."
+ },
+ {
+  "m": "Module II",
+  "q": "With `int a = 5, b = 2;` what is `(float)a / b`?",
+  "o": [
+   "Compile error",
+   "2.5",
+   "2.0",
+   "2"
+  ],
+  "a": 1,
+  "e": "The cast turns a into 5.0 first, so the division is floating-point: 2.5."
+ },
+ {
+  "m": "Module II",
+  "q": "Which format specifier prints a double with printf (as in the slides)?",
+  "o": [
+   "%d",
+   "%lf",
+   "%c",
+   "%s"
+  ],
+  "a": 1,
+  "e": "%lf is for double. %f is float, %d int, %c char, %s string."
+ },
+ {
+  "m": "Module II",
+  "q": "Result of `int m = (3 > 9) ? 3 : 9;`",
+  "o": [
+   "9",
+   "3",
+   "0",
+   "1"
+  ],
+  "a": 0,
+  "e": "The condition 3 > 9 is false, so the value after the colon (9) is chosen."
+ },
+ {
+  "m": "Module III",
+  "q": "In C, which values count as TRUE in a condition?",
+  "o": [
+   "Only the word true",
+   "Only positive numbers",
+   "Any non-zero value",
+   "Only 1"
+  ],
+  "a": 2,
+  "e": "Zero is false. Every non-zero value (even -5) is true."
+ },
+ {
+  "m": "Module III",
+  "q": "What does this print? `int a = 0; if (a = 5) printf(\"Yes\"); else printf(\"No\");`",
+  "o": [
+   "Error",
+   "Yes",
+   "Nothing",
+   "No"
+  ],
+  "a": 1,
+  "e": "= is assignment, not comparison. a becomes 5 (non-zero, so true) and Yes is printed. You wanted ==."
+ },
+ {
+  "m": "Module III",
+  "q": "For age = 17, what is `age >= 13 && age < 19`?",
+  "o": [
+   "Compile error",
+   "True (1)",
+   "False (0)",
+   "Undefined"
+  ],
+  "a": 1,
+  "e": "Both parts are true (17 >= 13 and 17 < 19), and && needs both."
+ },
+ {
+  "m": "Module III",
+  "q": "`!(grade == 60)` is equivalent to:",
+  "o": [
+   "grade == 0",
+   "grade != 60",
+   "grade >= 60",
+   "grade = 60"
+  ],
+  "a": 1,
+  "e": "NOT of equal is not-equal."
+ },
+ {
+  "m": "Module III",
+  "q": "Why does an `else` give the error \"else without a previous if\"?",
+  "o": [
+   "else needs a semicolon",
+   "Two statements follow the if without braces",
+   "if cannot have an else",
+   "else must be uppercase"
+  ],
+  "a": 1,
+  "e": "Without braces the if controls only ONE statement. A second statement ends the if, so the else has nothing to attach to."
+ },
+ {
+  "m": "Module III",
+  "q": "With a=5, b=5, c=10 what is `(a == b) && (c < b)`?",
+  "o": [
+   "1",
+   "0",
+   "5",
+   "10"
+  ],
+  "a": 1,
+  "e": "a == b is true but c < b (10 < 5) is false. true AND false = 0."
+ },
+ {
+  "m": "Module III",
+  "q": "Using the else-if ladder from the slides, what is printed for grade = 85?",
+  "o": [
+   "C",
+   "B",
+   "D",
+   "A"
+  ],
+  "a": 1,
+  "e": "85 fails the >= 90 test, passes >= 80, so B is printed and the rest of the ladder is skipped."
+ },
+ {
+  "m": "Module III",
+  "q": "Nested example: examGrade = 58 and quizGrade = 10. What is printed?",
+  "o": [
+   "There is problem",
+   "OK",
+   "There is problem + We have a major problem",
+   "Nothing"
+  ],
+  "a": 0,
+  "e": "58 < 60 so 'There is problem' prints. The inner test quizGrade < 10 is false (10 is not less than 10), so no major problem."
+ },
+ {
+  "m": "Module III",
+  "q": "Nested example: examGrade = 66 and quizGrade = 6. What is printed?",
+  "o": [
+   "Both messages",
+   "There is problem",
+   "We have a major problem",
+   "OK"
+  ],
+  "a": 3,
+  "e": "66 is not below 60, so the else branch runs and prints OK. The quiz grade is never checked."
+ },
+ {
+  "m": "Module I",
+  "q": "Which unit gives rapid access but has LOW capacity?",
+  "o": [
+   "Secondary storage",
+   "Hard disk",
+   "Memory unit",
+   "CD-ROM"
+  ],
+  "a": 2,
+  "e": "The memory unit is fast but small. Secondary storage is cheap, big and long-term."
+ },
+ {
+  "m": "Module I",
+  "q": "What is decimal 25 in binary?",
+  "o": [
+   "10101",
+   "11001",
+   "10011",
+   "11100"
+  ],
+  "a": 1,
+  "e": "25 = 16 + 8 + 1, so the bits are 11001."
+ },
+ {
+  "m": "Module I",
+  "q": "What is the decimal value of the hexadecimal digit F?",
+  "o": [
+   "15",
+   "10",
+   "14",
+   "16"
+  ],
+  "a": 0,
+  "e": "Hex digits go 0-9 then A=10, B=11, C=12, D=13, E=14, F=15."
+ },
+ {
+  "m": "Module I",
+  "q": "Assembly language belongs to which generation?",
+  "o": [
+   "Third generation",
+   "Second generation",
+   "First generation",
+   "Fourth generation"
+  ],
+  "a": 1,
+  "e": "1st = machine language, 2nd = assembly (uses an assembler), 3rd = high-level (compiler/interpreter)."
+ },
+ {
+  "m": "Module I",
+  "q": "Which of these is an INTERPRETED language?",
+  "o": [
+   "C++",
+   "Fortran",
+   "C",
+   "Python"
+  ],
+  "a": 3,
+  "e": "Python, JavaScript, Perl and BASIC are interpreted. C, C++, COBOL and Fortran are compiled."
+ },
+ {
+  "m": "Module I",
+  "q": "A valid algorithm must:",
+  "o": [
+   "Run forever",
+   "Always contain a loop",
+   "Terminate after a finite number of steps",
+   "Be written in C"
+  ],
+  "a": 2,
+  "e": "An algorithm is a finite sequence of clear instructions that always terminates."
+ },
+ {
+  "m": "Module II",
+  "q": "Which of these is a C keyword?",
+  "o": [
+   "int",
+   "printf",
+   "Integer",
+   "main"
+  ],
+  "a": 0,
+  "e": "int is a keyword. main and printf are just function names; Integer is not in C."
+ },
+ {
+  "m": "Module II",
+  "q": "In C, are `Total` and `total` the same identifier?",
+  "o": [
+   "Yes, the same",
+   "No, they are different",
+   "Only inside main",
+   "It gives an error"
+  ],
+  "a": 1,
+  "e": "C is case-sensitive, so they are two different identifiers."
+ },
+ {
+  "m": "Module II",
+  "q": "What does `printf(\"%d\", 10 % 3);` print?",
+  "o": [
+   "3",
+   "0",
+   "10",
+   "1"
+  ],
+  "a": 3,
+  "e": "% gives the remainder: 10 divided by 3 is 3 remainder 1."
+ },
+ {
+  "m": "Module II",
+  "q": "After `int a = 5; int b = --a;` what are a and b?",
+  "o": [
+   "a=4, b=5",
+   "a=5, b=4",
+   "a=4, b=4",
+   "a=6, b=6"
+  ],
+  "a": 2,
+  "e": "Pre-decrement reduces a to 4 first, then b receives 4."
+ },
+ {
+  "m": "Module II",
+  "q": "What is `5 | 3` (bitwise OR)?",
+  "o": [
+   "8",
+   "1",
+   "7",
+   "6"
+  ],
+  "a": 2,
+  "e": "101 OR 011 = 111 = 7."
+ },
+ {
+  "m": "Module II",
+  "q": "What is `5 ^ 3` (bitwise XOR)?",
+  "o": [
+   "2",
+   "6",
+   "1",
+   "7"
+  ],
+  "a": 1,
+  "e": "101 XOR 011 = 110 = 6 (bits that differ become 1)."
+ },
+ {
+  "m": "Module II",
+  "q": "Which operator is evaluated RIGHT to LEFT?",
+  "o": [
+   "=",
+   "&&",
+   "+",
+   "*"
+  ],
+  "a": 0,
+  "e": "Assignment (=, +=, ...), unary operators and ?: associate right to left. Most others go left to right."
+ },
+ {
+  "m": "Module II",
+  "q": "Which has higher precedence?",
+  "o": [
+   "||",
+   "They are equal",
+   "Neither",
+   "&&"
+  ],
+  "a": 3,
+  "e": "&& binds tighter than ||, so a || b && c means a || (b && c)."
+ },
+ {
+  "m": "Module II",
+  "q": "What does `float f = 7 / 2; printf(\"%f\", f);` print?",
+  "o": [
+   "3",
+   "3.000000",
+   "4.000000",
+   "3.500000"
+  ],
+  "a": 1,
+  "e": "7/2 is integer division = 3. Storing 3 in a float and printing gives 3.000000."
+ },
+ {
+  "m": "Module II",
+  "q": "Which header declares `strlen()` and `strcpy()`?",
+  "o": [
+   "<string.h>",
+   "<stdio.h>",
+   "<conio.h>",
+   "<math.h>"
+  ],
+  "a": 0,
+  "e": "String functions live in <string.h>."
+ },
+ {
+  "m": "Module II",
+  "q": "Which format specifier prints a memory address?",
+  "o": [
+   "%x",
+   "%a",
+   "%p",
+   "%m"
+  ],
+  "a": 2,
+  "e": "%p prints a pointer/address in hexadecimal form."
+ },
+ {
+  "m": "Module II",
+  "q": "Where does execution of a C program begin?",
+  "o": [
+   "The first function written",
+   "main()",
+   "stdio.h",
+   "The first global variable"
+  ],
+  "a": 1,
+  "e": "Every C program starts executing at main()."
+ },
+ {
+  "m": "Module II",
+  "q": "A missing semicolon is what kind of error?",
+  "o": [
+   "Logic error",
+   "Runtime error",
+   "Syntax error",
+   "Linker warning"
+  ],
+  "a": 2,
+  "e": "Syntax errors are caught by the compiler. Logic errors give wrong answers while the program runs."
+ },
+ {
+  "m": "Module II",
+  "q": "Value of `10 + 3 * 2 - 4 / 2` is:",
+  "o": [
+   "12",
+   "10",
+   "24",
+   "14"
+  ],
+  "a": 3,
+  "e": "3*2 = 6 and 4/2 = 2 first, then 10 + 6 - 2 = 14."
+ },
+ {
+  "m": "Module II",
+  "q": "Value of `(10 + 3) * (2 - 4) / 2` is:",
+  "o": [
+   "13",
+   "-26",
+   "0",
+   "-13"
+  ],
+  "a": 3,
+  "e": "Brackets: 13 and -2. Then 13 * -2 = -26, and -26 / 2 = -13."
+ },
+ {
+  "m": "Module III",
+  "q": "In an if-else statement, how many of the two blocks run?",
+  "o": [
+   "None",
+   "Both",
+   "It depends on the braces",
+   "Exactly one"
+  ],
+  "a": 3,
+  "e": "If the condition is true the if block runs, otherwise the else block runs. Never both."
+ },
+ {
+  "m": "Module III",
+  "q": "Using the else-if ladder from the slides, what prints for grade = 59?",
+  "o": [
+   "F",
+   "B",
+   "C",
+   "D"
+  ],
+  "a": 0,
+  "e": "59 fails every test (>=90, >=80, >=70, >=60), so the final else prints F."
+ },
+ {
+  "m": "Module III",
+  "q": "With a=5, b=5, c=10 what is `(a != b) || (c < b)`?",
+  "o": [
+   "0",
+   "5",
+   "10",
+   "1"
+  ],
+  "a": 0,
+  "e": "a != b is false and c < b is false. false OR false = 0."
+ },
+ {
+  "m": "Module III",
+  "q": "`int x = 1; if (x > 5); printf(\"Hi\");` What happens?",
+  "o": [
+   "Compile error",
+   "Hi prints only if x > 5",
+   "Hi prints",
+   "Nothing prints"
+  ],
+  "a": 2,
+  "e": "The semicolon after if(...) is an empty statement. printf is outside the if and always runs."
+ },
+ {
+  "m": "Module III",
+  "q": "Nested example: examGrade = 56 and quizGrade = 6. What is printed?",
+  "o": [
+   "There is problem and We have a major problem",
+   "Only: There is problem",
+   "Only: We have a major problem",
+   "OK"
+  ],
+  "a": 0,
+  "e": "56 < 60 prints the first message, and 6 < 10 is also true so the major-problem message prints too."
+ },
+ {
+  "m": "Module III",
+  "q": "In `A && B`, if A is false, what happens to B?",
+  "o": [
+   "B is always evaluated",
+   "B is evaluated twice",
+   "Compile error",
+   "B is not evaluated (short-circuit)"
+  ],
+  "a": 3,
+  "e": "&& short-circuits: once A is false the result must be false, so B is skipped."
+ },
+ {
+  "m": "Module III",
+  "q": "For marks = 60, is `marks >= 40 && marks < 60` true?",
+  "o": [
+   "True",
+   "False",
+   "Depends on the compiler",
+   "Compile error"
+  ],
+  "a": 1,
+  "e": "60 < 60 is false, so the whole && expression is false."
+ },
+ {
+  "m": "Module III",
+  "q": "Why is `grade >= 90` tested BEFORE `grade >= 80` in the ladder?",
+  "o": [
+   "Otherwise 95 would print B",
+   "It runs faster",
+   "Syntax requires it",
+   "There is no reason"
+  ],
+  "a": 0,
+  "e": "The first true condition wins. If >= 80 came first, a 95 would match it and print B."
+ }
+];
+const $=id=>document.getElementById(id);
+const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+const fmt=s=>esc(s).replace(/`([^`]+)`/g,'<code>$1</code>');
+const MODS=['Module I','Module II','Module III'];
+let t0=0,tick=0,mstat={},user={},mods=new Set(MODS),count=10,shuffle=true,deck=[],i=0,score=0,locked=false,wrong=[];
+const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+function show(id){['home','play','end','board'].forEach(x=>$(x).classList.toggle('hide',x!==id));window.scrollTo({top:0})}
+function pool(){return DATA.filter(d=>mods.has(d.m))}
+function chip(box,label,on,fn){const b=document.createElement('button');b.className='chip';b.textContent=label;b.setAttribute('aria-pressed',on);b.onclick=()=>fn(b);box.appendChild(b);return b}
+const hist=()=>{try{return JSON.parse(store.get('cq_hist'))||[]}catch(e){return[]}};
+const fT=ms=>{const s=Math.round(ms/1000);return Math.floor(s/60)+':'+String(s%60).padStart(2,'0')};
+function greet(){$('hi').textContent=user.name?'Hi '+user.name.split(' ')[0]+', ready?':'Test yourself on C';const ok=(user.name||'').length>=2;$('start').disabled=!ok;$('need').classList.toggle('hide',ok)}
+function saveUser(){user={name:$('nm').value.trim().replace(/\s+/g,' '),roll:$('roll').value.trim()};store.set('cq_user',JSON.stringify(user));greet()}
+$('nm').oninput=$('roll').oninput=saveUser;
+$('nm').onkeydown=e=>{if(e.key==='Enter'&&!$('start').disabled)$('start').click()};
+function buildHome(){
+  try{user=JSON.parse(store.get('cq_user'))||{}}catch(e){user={}}
+  $('nm').value=user.name||'';$('roll').value=user.roll||'';$('att').textContent=hist().length;greet();
+  const mb=$('mods');mb.innerHTML='';
+  MODS.forEach(m=>chip(mb,m,mods.has(m),b=>{if(mods.has(m)){if(mods.size>1)mods.delete(m)}else mods.add(m);[...mb.children].forEach((c,k)=>c.setAttribute('aria-pressed',mods.has(MODS[k])));refresh()}));
+  const cb=$('counts');cb.innerHTML='';
+  [10,20,30,0].forEach(n=>chip(cb,n?String(n):'All',count===n,()=>{count=n;[...cb.children].forEach((c,k)=>c.setAttribute('aria-pressed',[10,20,30,0][k]===count))}));
+  const b=store.get('cq_best');$('best').textContent=b?b+'%':'-';refresh()}
+function refresh(){$('avail').textContent=pool().length}
+$('shuf').onclick=e=>{shuffle=!shuffle;e.currentTarget.setAttribute('aria-pressed',shuffle)};
+function shuf(a){a=a.slice();for(let k=a.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[a[k],a[j]]=[a[j],a[k]]}return a}
+function mix(d){const ix=shuf(d.o.map((_,k)=>k));return{...d,o:ix.map(k=>d.o[k]),a:ix.indexOf(d.a)}}
+function begin(list,limit){deck=shuffle?shuf(list):list.slice();if(limit&&count&&deck.length>count)deck=deck.slice(0,count);deck=deck.map(mix);i=0;score=0;wrong=[];mstat={};t0=Date.now();clearInterval(tick);$('tm').textContent='0:00';tick=setInterval(()=>$('tm').textContent=fT(Date.now()-t0),1000);show('play');render()}
+$('start').onclick=()=>begin(pool(),true);
+function render(){
+  const d=deck[i];locked=false;
+  $('pos').textContent='Question '+(i+1)+' of '+deck.length;$('sc').textContent='Score '+score;
+  $('prog').style.width=(i/deck.length*100)+'%';$('tag').textContent=d.m;$('q').innerHTML=fmt(d.q);
+  $('fb').innerHTML='';$('next').disabled=true;$('next').textContent=i===deck.length-1?'Finish':'Next';
+  const o=$('opts');o.innerHTML='';
+  d.o.forEach((t,k)=>{const b=document.createElement('button');b.className='opt';b.innerHTML='<span class="k">'+'ABCD'[k]+'</span><span>'+fmt(t)+'</span>';b.onclick=()=>pick(k);o.appendChild(b)})}
+function pick(k){
+  if(locked)return;locked=true;const d=deck[i],bs=[...$('opts').children];
+  bs.forEach((b,j)=>{b.disabled=true;if(j===d.a)b.classList.add('right');else if(j===k)b.classList.add('wrong')});
+  const ok=k===d.a;(mstat[d.m]=mstat[d.m]||[0,0])[1]++;if(ok){score++;mstat[d.m][0]++}else wrong.push({d,k});
+  $('sc').textContent='Score '+score;
+  $('fb').innerHTML='<div class="fb '+(ok?'good':'bad')+'"><b>'+(ok?'Correct!':'Not quite. Answer: '+'ABCD'[d.a])+'</b>'+fmt(d.e)+'</div>';
+  $('next').disabled=false;$('prog').style.width=((i+1)/deck.length*100)+'%';$('next').focus()}
+$('next').onclick=()=>{if(i<deck.length-1){i++;render()}else finish()};
+$('quit').onclick=()=>{if(confirm('Quit this quiz?'))show('home')};
+function finish(){
+  const n=deck.length,p=Math.round(score/n*100),el=Date.now()-t0;clearInterval(tick);show('end');
+  $('pct').textContent=p+'%';$('frac').textContent=score+' / '+n;
+  $('arc').style.strokeDashoffset=402;setTimeout(()=>$('arc').style.strokeDashoffset=402*(1-score/n),60);
+  const m=p>=90?['Outstanding!','You are exam ready.']:p>=70?['Great job!','Review the misses below and you are there.']:p>=50?['Getting there','Read the explanations and try again.']:['Keep practising','Go through the study guide, then retry.'];
+  $('msg').textContent=m[0];$('msg2').textContent=m[1];
+  const h=hist();if(n>=5){h.push({n:user.name,r:user.roll,p,s:score,t:n,ms:el,d:Date.now(),mm:mstat});store.set('cq_hist',JSON.stringify(h.slice(-100)))}
+  const dt=new Date().toLocaleDateString(undefined,{day:'numeric',month:'short',year:'numeric'});
+  $('meta').textContent=[user.name,user.roll,fT(el),dt].filter(Boolean).join('  |  ');
+  $('ph').textContent='C Programming Quiz result - '+[user.name,user.roll].filter(Boolean).join(', ')+' - '+score+'/'+n+' ('+p+'%) - time '+fT(el)+' - '+dt;
+  const prev=+store.get('cq_best')||0;if(p>prev&&deck.length>=10)store.set('cq_best',p);
+  $('retry').classList.toggle('hide',!wrong.length);
+  $('review').innerHTML=wrong.length?'<h2>Review your mistakes</h2>'+wrong.map(w=>'<div class="rev"><b>'+fmt(w.d.q)+'</b><small>Your answer: '+fmt(w.d.o[w.k])+'</small><small>Correct: '+fmt(w.d.o[w.d.a])+'. '+fmt(w.d.e)+'</small></div>').join(''):'<p class="sub" style="text-align:center">Perfect score, no mistakes to review.</p>'}
+$('share').onclick=async e=>{const b=e.currentTarget,x=(user.name||'I')+' scored '+score+'/'+deck.length+' ('+Math.round(score/deck.length*100)+'%) in '+fT(Date.now()-t0)+' on the C Programming Quiz.';
+  try{if(navigator.share)await navigator.share({text:x});else{await navigator.clipboard.writeText(x);b.textContent='Copied!';setTimeout(()=>b.textContent='Share result',1500)}}catch(err){}};
+$('print').onclick=()=>window.print();
+$('boardBtn').onclick=()=>{renderBoard();show('board')};
+$('bback').onclick=()=>{buildHome();show('home')};
+$('bclear').onclick=()=>{if(confirm('Delete all saved scores on this device?')){try{localStorage.removeItem('cq_hist');localStorage.removeItem('cq_best')}catch(e){}renderBoard()}};
+function renderBoard(){
+  const h=hist(),top=h.slice().sort((a,b)=>b.p-a.p||a.ms-b.ms).slice(0,10);
+  const avg=h.length?Math.round(h.reduce((s,x)=>s+x.p,0)/h.length):0;
+  $('bstats').innerHTML=[[h.length,'Attempts'],[h.length?Math.max(...h.map(x=>x.p))+'%':'-','Best'],[h.length?avg+'%':'-','Average']].map(a=>'<div class="stat"><b>'+a[0]+'</b><span>'+a[1]+'</span></div>').join('');
+  $('btab').innerHTML=top.length?top.map((x,k)=>'<div class="lb'+(x.n===user.name?' me':'')+'"><span class="rk">'+(k+1)+'</span><span><b>'+esc(x.n||'Guest')+'</b><small>'+esc(x.r||'')+' '+new Date(x.d).toLocaleDateString()+'</small></span><b>'+x.p+'%</b><span class="tm">'+fT(x.ms)+'</span></div>').join(''):'<p class="sub">No attempts yet. Finish a quiz to see it here.</p>';
+  $('bmod').innerHTML=MODS.map(m=>{let c=0,t=0;h.forEach(x=>{if(x.mm&&x.mm[m]){c+=x.mm[m][0];t+=x.mm[m][1]}});const p=t?Math.round(c/t*100):0;return '<div class="mb"><b>'+m+'</b> <span class="sub">'+(t?p+'% ('+c+'/'+t+')':'no data yet')+'</span><div class="bar"><i style="width:'+p+'%"></i></div></div>'}).join('')}
+$('again').onclick=()=>begin(pool(),true);
+$('retry').onclick=()=>begin(wrong.map(w=>w.d));
+$('home2').onclick=()=>{buildHome();show('home')};
+document.addEventListener('keydown',e=>{
+  if($('play').classList.contains('hide'))return;
+  const k='1234'.indexOf(e.key);const l='abcd'.indexOf(e.key.toLowerCase());const idx=k>-1?k:l;
+  if(idx>-1&&idx<deck[i].o.length&&e.key.length===1){pick(idx)}
+  else if(e.key==='Enter'&&locked){e.preventDefault();$('next').click()}});
+const th=store.get('cq_theme');if(th)document.documentElement.dataset.theme=th;
+$('theme').onclick=()=>{const dark=document.documentElement.dataset.theme?document.documentElement.dataset.theme==='dark':matchMedia('(prefers-color-scheme:dark)').matches;const n=dark?'light':'dark';document.documentElement.dataset.theme=n;store.set('cq_theme',n)};
+document.addEventListener('pointerdown',e=>{const b=e.target.closest('.btn,.opt,.chip,.icon');if(!b||b.disabled)return;const r=b.getBoundingClientRect(),s=Math.max(r.width,r.height)*2,i=document.createElement('i');i.className='rip';i.style.cssText='width:'+s+'px;height:'+s+'px;left:'+(e.clientX-r.left-s/2)+'px;top:'+(e.clientY-r.top-s/2)+'px';b.appendChild(i);setTimeout(()=>i.remove(),650)});
+buildHome();
+</script>
+</body>
+</html>
