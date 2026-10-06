@@ -84,14 +84,51 @@ label{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:upperca
 @keyframes rp{to{transform:scale(1);opacity:0}}
 .bar i{background:linear-gradient(90deg,var(--p),color-mix(in srgb,var(--p) 55%,#FFB300))}
 ::selection{background:var(--pc);color:var(--opc)}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{min-height:100vh;min-height:100dvh;touch-action:manipulation}
+button{-webkit-appearance:none;appearance:none}
+.bg{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
+.bg i{position:absolute;border-radius:50%;filter:blur(70px);opacity:.55;background:var(--pc);animation:float 16s ease-in-out infinite alternate}
+.bg i:nth-child(1){width:340px;height:340px;top:-90px;left:-80px}
+.bg i:nth-child(2){width:300px;height:300px;bottom:-80px;right:-60px;background:var(--tc);animation-duration:21s}
+.bg i:nth-child(3){width:220px;height:220px;top:45%;left:55%;opacity:.35;animation-duration:25s}
+section.card{animation:in .5s cubic-bezier(.2,.8,.2,1) both}
+.q{animation:fade .4s both}
+.opt{animation:slide .45s cubic-bezier(.2,.8,.2,1) both}
+.opt:nth-child(2){animation-delay:.05s}.opt:nth-child(3){animation-delay:.1s}.opt:nth-child(4){animation-delay:.15s}
+.opt.right{animation:pop .45s}.opt.wrong{animation:shake .45s}
+.btn:active,.chip:active,.icon:active{transform:scale(.95)}
+.btn,.chip,.icon,.opt{transition:transform .15s,background .2s,border-color .2s,box-shadow .2s,filter .2s}
+.logo{animation:pop .7s .2s both}
+.bar i{background-size:200% 100%;animation:shim 2.2s linear infinite}
+.stat{animation:slide .5s both}.stat:nth-child(2){animation-delay:.08s}.stat:nth-child(3){animation-delay:.16s}
+.top{gap:8px;flex-wrap:wrap}
+#stk{font-weight:600;color:var(--p)}#stk.bump{animation:pop .4s}
+.tagrow{display:flex;justify-content:space-between;align-items:flex-start}
+.bm{font-size:24px;line-height:1;border:0;background:transparent;color:var(--ol);cursor:pointer;padding:4px 8px;border-radius:12px}
+.bm.on{color:#E65100}.bm:hover{background:var(--s3)}
+.tb{position:relative;height:22px;border-radius:12px;background:var(--s3);overflow:hidden;margin:-8px 0 16px}
+.tb i{position:absolute;inset:0 auto 0 0;width:100%;background:var(--pc);animation:none}
+.tb b{position:relative;display:block;text-align:center;font-size:12px;line-height:22px;color:var(--opc)}
+.tb.low i{background:var(--ec)}.tb.low b{color:var(--oec)}
+#cf{position:fixed;inset:0;pointer-events:none;z-index:50}
+.card{box-shadow:0 1px 3px rgba(154,70,0,.14);box-shadow:0 1px 3px color-mix(in srgb,var(--p) 14%,transparent),0 8px 24px color-mix(in srgb,var(--p) 8%,transparent)}
+@keyframes in{from{opacity:0;transform:translateY(18px) scale(.98)}to{opacity:1;transform:none}}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@keyframes slide{from{opacity:0;transform:translateX(-14px)}to{opacity:1;transform:none}}
+@keyframes pop{0%{transform:scale(.9)}55%{transform:scale(1.06)}100%{transform:scale(1)}}
+@keyframes shake{0%,100%{transform:none}20%{transform:translateX(-7px)}40%{transform:translateX(7px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+@keyframes shim{from{background-position:0 0}to{background-position:-200% 0}}
+@keyframes float{from{transform:translate(0,0) scale(1)}to{transform:translate(40px,30px) scale(1.15)}}
 @keyframes up{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 footer{text-align:center;color:var(--ol);font-size:12px;margin-top:18px}
 @media(max-width:480px){h1{font-size:26px}.card{padding:18px;border-radius:24px}.q{font-size:18px}}
 </style>
 </head>
 <body>
+<div class="bg" aria-hidden="true"><i></i><i></i><i></i></div><canvas id="cf" aria-hidden="true"></canvas>
 <main>
-<header><div class="brand"><div class="logo">C</div>C Quiz</div><div class="hdr-r"><button class="icon" id="boardBtn" aria-label="Scores and progress" title="Scores">&#127942;</button><button class="icon" id="theme" aria-label="Toggle theme" title="Theme">&#9680;</button></div></header>
+<header><div class="brand"><div class="logo">C</div>C Quiz</div><div class="hdr-r"><button class="icon" id="boardBtn" aria-label="Scores and progress" title="Scores">&#127942;</button><button class="icon" id="snd" aria-label="Sound on or off" title="Sound">&#128266;</button><button class="icon" id="theme" aria-label="Toggle theme" title="Theme">&#9680;</button></div></header>
 
 <section class="card" id="home">
   <h1 id="hi">Test yourself on C</h1>
@@ -99,15 +136,15 @@ footer{text-align:center;color:var(--ol);font-size:12px;margin-top:18px}
   <div class="who"><div><label for="nm">Your name *</label><input id="nm" maxlength="30" placeholder="e.g. Aarav Sharma" autocomplete="name"></div><div><label for="roll">Roll no. / class</label><input id="roll" maxlength="20" placeholder="Optional" autocomplete="off"></div></div>
   <h2>Modules</h2><div class="chips" id="mods"></div>
   <h2>Questions</h2><div class="chips" id="counts"></div>
-  <h2>Options</h2><div class="chips"><button class="chip" id="shuf" aria-pressed="true">Shuffle questions</button></div>
+  <h2>Options</h2><div class="chips"><button class="chip" id="shuf" aria-pressed="true">Shuffle</button><button class="chip" id="tmode" aria-pressed="false">Timed: 30s each</button><button class="chip" id="bmode" aria-pressed="false">Flagged only (0)</button></div>
   <div class="stats"><div class="stat"><b id="best">-</b><span>Best score</span></div><div class="stat"><b id="att">0</b><span>Attempts</span></div><div class="stat"><b id="avail">0</b><span>Questions in bank</span></div></div>
   <div class="row"><button class="btn" id="start" disabled>Start quiz</button><span class="sub" id="need" style="align-self:center;font-size:13px">Enter your name to begin</span></div>
 </section>
 
 <section class="card hide" id="play">
-  <div class="top"><span id="pos"></span><span id="tm" aria-label="Elapsed time">0:00</span><span id="sc"></span></div>
-  <div class="bar"><i id="prog"></i></div>
-  <span class="tag" id="tag"></span>
+  <div class="top"><span id="pos"></span><span id="tm" aria-label="Elapsed time">0:00</span><span id="stk" aria-live="polite"></span><span id="sc"></span></div>
+  <div class="bar"><i id="prog"></i></div><div class="tb hide" id="tbar"><i></i><b id="tsec"></b></div>
+  <div class="tagrow"><span class="tag" id="tag"></span><button class="bm" id="bm" aria-label="Flag question for later" title="Flag (F)">&#9734;</button></div>
   <div class="q" id="q"></div>
   <div id="opts"></div>
   <div id="fb"></div>
@@ -123,7 +160,7 @@ footer{text-align:center;color:var(--ol);font-size:12px;margin-top:18px}
 <section class="card hide" id="board"><h1 style="font-size:26px">Scores and progress</h1><p class="sub">Saved on this device only.</p>
   <div class="stats" id="bstats"></div><h2>Top attempts</h2><div id="btab"></div><h2>Topic accuracy</h2><div id="bmod"></div>
   <div class="row"><button class="btn" id="bback">Back</button><button class="btn tonal" id="bclear">Clear my data</button></div></section>
-<footer>Keys: 1-4 or A-D to answer, Enter for next. Scores are stored in your browser only.</footer>
+<footer>Keys: 1-4 or A-D answer, Enter next, F flags a question. Scores are stored in your browser only.</footer>
 </main>
 <script>
 const DATA=[
@@ -852,10 +889,12 @@ const $=id=>document.getElementById(id);
 const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 const fmt=s=>esc(s).replace(/`([^`]+)`/g,'<code>$1</code>');
 const MODS=['Module I','Module II','Module III'];
-let t0=0,tick=0,mstat={},user={},mods=new Set(MODS),count=10,shuffle=true,deck=[],i=0,score=0,locked=false,wrong=[];
+let qt=0,tl=0,streak=0,timed=false,bmode=false,snd=true,actx=null,t0=0,tick=0,mstat={},user={},mods=new Set(MODS),count=10,shuffle=true,deck=[],i=0,score=0,locked=false,wrong=[];
 const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
 function show(id){['home','play','end','board'].forEach(x=>$(x).classList.toggle('hide',x!==id));window.scrollTo({top:0})}
-function pool(){return DATA.filter(d=>mods.has(d.m))}
+DATA.forEach((d,k)=>d.i=k);
+let bms=new Set();try{bms=new Set(JSON.parse(localStorage.getItem('cq_bm')||'[]'))}catch(e){}
+function pool(){return DATA.filter(d=>mods.has(d.m)&&(!bmode||bms.has(d.i)))}
 function chip(box,label,on,fn){const b=document.createElement('button');b.className='chip';b.textContent=label;b.setAttribute('aria-pressed',on);b.onclick=()=>fn(b);box.appendChild(b);return b}
 const hist=()=>{try{return JSON.parse(store.get('cq_hist'))||[]}catch(e){return[]}};
 const fT=ms=>{const s=Math.round(ms/1000);return Math.floor(s/60)+':'+String(s%60).padStart(2,'0')};
@@ -871,41 +910,59 @@ function buildHome(){
   const cb=$('counts');cb.innerHTML='';
   [10,20,30,0].forEach(n=>chip(cb,n?String(n):'All',count===n,()=>{count=n;[...cb.children].forEach((c,k)=>c.setAttribute('aria-pressed',[10,20,30,0][k]===count))}));
   const b=store.get('cq_best');$('best').textContent=b?b+'%':'-';refresh()}
-function refresh(){$('avail').textContent=pool().length}
+function refresh(){$('avail').textContent=pool().length;$('bmode').textContent='Flagged only ('+bms.size+')'}
 $('shuf').onclick=e=>{shuffle=!shuffle;e.currentTarget.setAttribute('aria-pressed',shuffle)};
 function shuf(a){a=a.slice();for(let k=a.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[a[k],a[j]]=[a[j],a[k]]}return a}
 function mix(d){const ix=shuf(d.o.map((_,k)=>k));return{...d,o:ix.map(k=>d.o[k]),a:ix.indexOf(d.a)}}
-function begin(list,limit){deck=shuffle?shuf(list):list.slice();if(limit&&count&&deck.length>count)deck=deck.slice(0,count);deck=deck.map(mix);i=0;score=0;wrong=[];mstat={};t0=Date.now();clearInterval(tick);$('tm').textContent='0:00';tick=setInterval(()=>$('tm').textContent=fT(Date.now()-t0),1000);show('play');render()}
-$('start').onclick=()=>begin(pool(),true);
+function begin(list,limit){deck=shuffle?shuf(list):list.slice();if(limit&&count&&deck.length>count)deck=deck.slice(0,count);deck=deck.map(mix);i=0;score=0;wrong=[];mstat={};streak=0;$('stk').textContent='';t0=Date.now();clearInterval(tick);$('tm').textContent='0:00';tick=setInterval(()=>$('tm').textContent=fT(Date.now()-t0),1000);show('play');render()}
+$('start').onclick=()=>{if(!pool().length){$('need').textContent='No flagged questions yet';$('need').classList.remove('hide');return}begin(pool(),true)};
+$('tmode').onclick=e=>{timed=!timed;e.currentTarget.setAttribute('aria-pressed',timed)};
+$('bmode').onclick=e=>{bmode=!bmode;e.currentTarget.setAttribute('aria-pressed',bmode);refresh()};
+function saveBm(){store.set('cq_bm',JSON.stringify([...bms]))}
+function tgBm(){if($('play').classList.contains('hide'))return;const d=deck[i];bms.has(d.i)?bms.delete(d.i):bms.add(d.i);saveBm();bmUI(d)}
+function bmUI(d){$('bm').innerHTML=bms.has(d.i)?'&#9733;':'&#9734;';$('bm').classList.toggle('on',bms.has(d.i))}
+$('bm').onclick=tgBm;
+snd=store.get('cq_snd')!=='0';$('snd').innerHTML=snd?'&#128266;':'&#128263;';
+$('snd').onclick=()=>{snd=!snd;store.set('cq_snd',snd?'1':'0');$('snd').innerHTML=snd?'&#128266;':'&#128263;';if(snd)tone(660,.1)};
+function tone(f,d){const AC=window.AudioContext||window.webkitAudioContext;if(!snd||!AC)return;try{actx=actx||new AC();const o=actx.createOscillator(),g=actx.createGain();o.type='sine';o.frequency.value=f;g.gain.value=.07;g.gain.exponentialRampToValueAtTime(.001,actx.currentTime+d);o.connect(g);g.connect(actx.destination);o.start();o.stop(actx.currentTime+d)}catch(e){}}
+function feel(ok){if(ok){tone(660,.12);setTimeout(()=>tone(880,.16),110)}else{tone(180,.28);if(navigator.vibrate)navigator.vibrate(120)}}
+function startQ(d){clearInterval(qt);bmUI(d);const tb=$('tbar'),bar=tb.firstElementChild;tb.classList.toggle('hide',!timed);if(!timed)return;
+  tl=30;tb.classList.remove('low');bar.style.transition='none';bar.style.width='100%';$('tsec').textContent=tl+'s';
+  requestAnimationFrame(()=>requestAnimationFrame(()=>bar.style.transition='width 1s linear'));
+  qt=setInterval(()=>{tl--;bar.style.width=(tl/30*100)+'%';$('tsec').textContent=tl+'s';tb.classList.toggle('low',tl<=8);if(tl<=0){clearInterval(qt);pick(-1)}},1000)}
+function countUp(p){const el=$('pct'),s=performance.now();(function f(n){const k=Math.min(1,(n-s)/900);el.textContent=Math.round(p*k)+'%';if(k<1)requestAnimationFrame(f)})(s)}
+function boom(){if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;const c=$('cf'),x=c.getContext('2d');c.width=innerWidth;c.height=innerHeight;const cl=['#9A4600','#FFB689','#FFB300','#EBE3A6','#FFDBC8','#E65100'];
+  const ps=Array.from({length:140},()=>({x:innerWidth/2,y:innerHeight*.35,vx:(Math.random()-.5)*15,vy:-Math.random()*13-3,s:Math.random()*7+4,c:cl[Math.random()*cl.length|0],r:Math.random()*6,vr:(Math.random()-.5)*.4}));let n=0;
+  (function f(){x.clearRect(0,0,c.width,c.height);ps.forEach(q=>{q.vy+=.35;q.x+=q.vx;q.y+=q.vy;q.r+=q.vr;x.save();x.translate(q.x,q.y);x.rotate(q.r);x.fillStyle=q.c;x.fillRect(-q.s/2,-q.s/2,q.s,q.s*.6);x.restore()});if(++n<170)requestAnimationFrame(f);else x.clearRect(0,0,c.width,c.height)})()}
 function render(){
-  const d=deck[i];locked=false;
+  const d=deck[i];locked=false;startQ(d);
   $('pos').textContent='Question '+(i+1)+' of '+deck.length;$('sc').textContent='Score '+score;
   $('prog').style.width=(i/deck.length*100)+'%';$('tag').textContent=d.m;$('q').innerHTML=fmt(d.q);
   $('fb').innerHTML='';$('next').disabled=true;$('next').textContent=i===deck.length-1?'Finish':'Next';
   const o=$('opts');o.innerHTML='';
   d.o.forEach((t,k)=>{const b=document.createElement('button');b.className='opt';b.innerHTML='<span class="k">'+'ABCD'[k]+'</span><span>'+fmt(t)+'</span>';b.onclick=()=>pick(k);o.appendChild(b)})}
 function pick(k){
-  if(locked)return;locked=true;const d=deck[i],bs=[...$('opts').children];
+  if(locked)return;locked=true;clearInterval(qt);const d=deck[i],bs=[...$('opts').children];
   bs.forEach((b,j)=>{b.disabled=true;if(j===d.a)b.classList.add('right');else if(j===k)b.classList.add('wrong')});
-  const ok=k===d.a;(mstat[d.m]=mstat[d.m]||[0,0])[1]++;if(ok){score++;mstat[d.m][0]++}else wrong.push({d,k});
+  const ok=k===d.a;(mstat[d.m]=mstat[d.m]||[0,0])[1]++;if(ok){score++;mstat[d.m][0]++}else wrong.push({d,k});streak=ok?streak+1:0;{const s=$('stk');s.textContent=streak>=2?'\uD83D\uDD25 '+streak:'';s.classList.remove('bump');void s.offsetWidth;s.classList.add('bump')}feel(ok);
   $('sc').textContent='Score '+score;
-  $('fb').innerHTML='<div class="fb '+(ok?'good':'bad')+'"><b>'+(ok?'Correct!':'Not quite. Answer: '+'ABCD'[d.a])+'</b>'+fmt(d.e)+'</div>';
+  $('fb').innerHTML='<div class="fb '+(ok?'good':'bad')+'"><b>'+(ok?'Correct!':(k<0?'Time\'s up. Answer: ':'Not quite. Answer: ')+'ABCD'[d.a])+'</b>'+fmt(d.e)+'</div>';
   $('next').disabled=false;$('prog').style.width=((i+1)/deck.length*100)+'%';$('next').focus()}
 $('next').onclick=()=>{if(i<deck.length-1){i++;render()}else finish()};
-$('quit').onclick=()=>{if(confirm('Quit this quiz?'))show('home')};
+$('quit').onclick=()=>{if(confirm('Quit this quiz?')){clearInterval(qt);clearInterval(tick);buildHome();show('home')}};
 function finish(){
-  const n=deck.length,p=Math.round(score/n*100),el=Date.now()-t0;clearInterval(tick);show('end');
-  $('pct').textContent=p+'%';$('frac').textContent=score+' / '+n;
+  const n=deck.length,p=Math.round(score/n*100),el=Date.now()-t0;clearInterval(tick);clearInterval(qt);$('tbar').classList.add('hide');show('end');
+  countUp(p);$('frac').textContent=score+' / '+n;
   $('arc').style.strokeDashoffset=402;setTimeout(()=>$('arc').style.strokeDashoffset=402*(1-score/n),60);
   const m=p>=90?['Outstanding!','You are exam ready.']:p>=70?['Great job!','Review the misses below and you are there.']:p>=50?['Getting there','Read the explanations and try again.']:['Keep practising','Go through the study guide, then retry.'];
-  $('msg').textContent=m[0];$('msg2').textContent=m[1];
+  if(p>=70)boom();$('msg').textContent=m[0];$('msg2').textContent=m[1];
   const h=hist();if(n>=5){h.push({n:user.name,r:user.roll,p,s:score,t:n,ms:el,d:Date.now(),mm:mstat});store.set('cq_hist',JSON.stringify(h.slice(-100)))}
   const dt=new Date().toLocaleDateString(undefined,{day:'numeric',month:'short',year:'numeric'});
   $('meta').textContent=[user.name,user.roll,fT(el),dt].filter(Boolean).join('  |  ');
   $('ph').textContent='C Programming Quiz result - '+[user.name,user.roll].filter(Boolean).join(', ')+' - '+score+'/'+n+' ('+p+'%) - time '+fT(el)+' - '+dt;
   const prev=+store.get('cq_best')||0;if(p>prev&&deck.length>=10)store.set('cq_best',p);
   $('retry').classList.toggle('hide',!wrong.length);
-  $('review').innerHTML=wrong.length?'<h2>Review your mistakes</h2>'+wrong.map(w=>'<div class="rev"><b>'+fmt(w.d.q)+'</b><small>Your answer: '+fmt(w.d.o[w.k])+'</small><small>Correct: '+fmt(w.d.o[w.d.a])+'. '+fmt(w.d.e)+'</small></div>').join(''):'<p class="sub" style="text-align:center">Perfect score, no mistakes to review.</p>'}
+  $('review').innerHTML=wrong.length?'<h2>Review your mistakes</h2>'+wrong.map(w=>'<div class="rev"><b>'+fmt(w.d.q)+'</b><small>Your answer: '+(w.k>=0?fmt(w.d.o[w.k]):'No answer (time up)')+'</small><small>Correct: '+fmt(w.d.o[w.d.a])+'. '+fmt(w.d.e)+'</small></div>').join(''):'<p class="sub" style="text-align:center">Perfect score, no mistakes to review.</p>'}
 $('share').onclick=async e=>{const b=e.currentTarget,x=(user.name||'I')+' scored '+score+'/'+deck.length+' ('+Math.round(score/deck.length*100)+'%) in '+fT(Date.now()-t0)+' on the C Programming Quiz.';
   try{if(navigator.share)await navigator.share({text:x});else{await navigator.clipboard.writeText(x);b.textContent='Copied!';setTimeout(()=>b.textContent='Share result',1500)}}catch(err){}};
 $('print').onclick=()=>window.print();
@@ -923,11 +980,14 @@ $('retry').onclick=()=>begin(wrong.map(w=>w.d));
 $('home2').onclick=()=>{buildHome();show('home')};
 document.addEventListener('keydown',e=>{
   if($('play').classList.contains('hide'))return;
+  if(e.key==='f'||e.key==='F'){tgBm();return}
   const k='1234'.indexOf(e.key);const l='abcd'.indexOf(e.key.toLowerCase());const idx=k>-1?k:l;
   if(idx>-1&&idx<deck[i].o.length&&e.key.length===1){pick(idx)}
   else if(e.key==='Enter'&&locked){e.preventDefault();$('next').click()}});
-const th=store.get('cq_theme');if(th)document.documentElement.dataset.theme=th;
-$('theme').onclick=()=>{const dark=document.documentElement.dataset.theme?document.documentElement.dataset.theme==='dark':matchMedia('(prefers-color-scheme:dark)').matches;const n=dark?'light':'dark';document.documentElement.dataset.theme=n;store.set('cq_theme',n)};
+const meta=document.querySelector('meta[name=theme-color]');
+function setTheme(n){document.documentElement.dataset.theme=n;meta.content=n==='dark'?'#1A120D':'#9A4600';store.set('cq_theme',n)}
+setTheme(store.get('cq_theme')==='dark'?'dark':'light');
+$('theme').onclick=()=>setTheme(document.documentElement.dataset.theme==='dark'?'light':'dark');
 document.addEventListener('pointerdown',e=>{const b=e.target.closest('.btn,.opt,.chip,.icon');if(!b||b.disabled)return;const r=b.getBoundingClientRect(),s=Math.max(r.width,r.height)*2,i=document.createElement('i');i.className='rip';i.style.cssText='width:'+s+'px;height:'+s+'px;left:'+(e.clientX-r.left-s/2)+'px;top:'+(e.clientY-r.top-s/2)+'px';b.appendChild(i);setTimeout(()=>i.remove(),650)});
 buildHome();
 </script>
